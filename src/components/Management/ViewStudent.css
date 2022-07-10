@@ -1,0 +1,12 @@
+.table thead th {
+  font-size: 18px;
+  font-weight: 500;
+  background: #780707;
+  color: #fff;
+}
+
+.table tbody tr:nth-child(even) td,
+.table tbody tr:nth-child(even) th {
+  background: #ffe9e9;
+}
+/* ---------------- */

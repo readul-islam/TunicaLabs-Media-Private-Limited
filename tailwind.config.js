@@ -2,6 +2,7 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  tailwindConfig: './styles/tailwind.config.js',
 
   daisyui: {
     themes: [
@@ -18,4 +19,5 @@ module.exports = {
     ],
   },
   plugins: [require("daisyui")],
+ 
 }

@@ -7,18 +7,30 @@ import {
   Routes, Route
 } from "react-router-dom";
 import SignIn from './components/Login/SignIn';
+import Management from './components/Management/Management';
+import ViewStudents from './components/Management/ViewStudents';
+import AddStudent from './components/Management/AddStudent';
 
 function App() {
   return (
     <>
-    <Navbar />
-        
+      <Navbar />
+     
+
       <Routes>
-        <Route path='/' element={<SignUp />} />
+       
         <Route path='/sign-in' element={<SignIn />} />
         <Route path='/sign-up' element={<SignUp />} />
+        <Route path='/management' element={ <Management /> } >
+    <Route index element={<ViewStudents />} />
+    <Route path='students' element={<ViewStudents />} />
+    <Route path='add-student' element={<AddStudent />} />
 
-        
+
+
+        </Route>
+
+
 
       </Routes>
 
