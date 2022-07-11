@@ -1,54 +1,128 @@
 import React from "react";
+import axios from "axios";
+import { useQuery } from "react-query";
 import "./ViewStudent.css";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 const ViewStudents = () => {
-  const data = [{}, {}, {}, {}, {}, {}, {}, {}];
+  const [students, setStudents] = useState([]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  //get all students
+  const { isLoading, refetch } = useQuery(["students"], () =>
+    fetch("https://morning-wildwood-86772.herokuapp.com/api/v1/all-students")
+      .then((res) => res.json())
+      .then((data) => {
+        setStudents(data);
+      })
+  );
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+  // student delete handler
+  const deleteHander = async (id) => {
+    const confirm = window.confirm(
+      "Are you sure you want to delete this student"
+    );
+    if (confirm) {
+      const { data } = await axios.delete(
+        `https://morning-wildwood-86772.herokuapp.com/api/v1/student/${id}`
+      );
+      refetch();
+      toast.success("successfully deleted", { id: 1 });
+    }
+  };
+  //filtters student
+  const onSubmit = async (values) => {
+    const { Name, age, divison, school } = values;
+    const { data } = await axios.get(
+      `https://morning-wildwood-86772.herokuapp.com/api/v1/students?name=${Name}&age=${age}&divison=${divison}&school=${school}&class=${values.class}`
+    );
+    console.log(data);
+    setStudents(data);
+  };
+
   return (
     <div className="m-4 p-6 shadow-2xl md:m-6">
       <p className="pb-4 text-lg text-accent">View Student</p>
-      <form className="grid grid-cols-2 gap-4 pb-10 md:grid-cols-3 lg:grid-cols-6">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid grid-cols-2 gap-4 pb-10 md:grid-cols-3 lg:grid-cols-6"
+      >
         <input
           type="text"
           placeholder="Name"
           className="input input-bordered max-w-[200px] bg-gray-200"
+          {...register("Name")}
         />
         <input
           type="text"
           placeholder="Age"
           className="input input-bordered max-w-[200px] bg-gray-200"
+          {...register("age")}
         />
-        <select className="select w-full max-w-[200px]  border-gray-400 bg-gray-200">
+        <select
+          {...register("school")}
+          className="select w-full max-w-[200px]  border-gray-400 bg-gray-200"
+        >
           <option disabled selected>
             School
           </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
+          <option>St. Xavier’s Collegiate School</option>
+          <option>The Doon School</option>
+          <option>The Shri Ram School</option>
+          <option>La Martiniere For Girls School</option>
+          <option>Mother’s International School</option>
+          <option>Little Flower High School</option>
+          <option>St. John’s High School </option>
+          <option>Shree Swaminarayan Gurukul International School </option>
+          <option>Greenwood International High School </option>
         </select>
-        <select className="select w-full max-w-[200px] border-gray-400 bg-gray-200">
+        <select
+          {...register("class")}
+          className="select w-full max-w-[200px] border-gray-400 bg-gray-200"
+        >
           <option disabled selected>
             Class
           </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
+          <option>Six</option>
+          <option>Seven</option>
+          <option>Eight</option>
+          <option>Nine</option>
+          <option>Ten</option>
+          <option>BA</option>
         </select>
-        <select className="select w-full max-w-[200px] border-gray-400 bg-gray-200">
+        <select
+          {...register("divison")}
+          className="select w-full max-w-[200px] border-gray-400 bg-gray-200"
+        >
           <option disabled selected>
             Divison
           </option>
-          <option>Game of Thrones</option>
-          <option>Lost</option>
-          <option>Breaking Bad</option>
-          <option>Walking Dead</option>
+          <option>Kolkata</option>
+          <option>Dehradun</option>
+          <option>Gurugram</option>
+          <option>Delhi</option>
+          <option>Delhi</option>
+          <option>Chandigarh</option>
+          <option>Hyderabad</option>
+          <option>Hyderabad</option>
+          <option>Mumbai</option>
+          <option>Bangalore</option>
         </select>
-        <input
+        <button
           type="submit"
-          value="Search"
           className="input max-w-[200px] bg-primary text-white md:px-14  "
-        />
+        >
+          Search
+        </button>
       </form>
       <div className="relative overflow-x-auto rounded-lg border-2">
         <table className="table  w-full ">
@@ -67,14 +141,14 @@ const ViewStudents = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((d, index) => (
-              <tr key={index}>
-                <th>{index}</th>
-                <td>Student name</td>
-                <td>10</td>
-                <td>Model School</td>
-                <td>3</td>
-                <td>A</td>
+            {students.map((d, index) => (
+              <tr key={d._id}>
+                <th>{index + 1}</th>
+                <td>{d.name}</td>
+                <td>{d.age}</td>
+                <td>{d.school}</td>
+                <td>{d.class}</td>
+                <td>{d.divison}</td>
                 <td>Active</td>
                 <td>
                   {" "}
@@ -84,7 +158,10 @@ const ViewStudents = () => {
                 </td>
                 <td>
                   {" "}
-                  <p className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                  <p
+                    onClick={() => deleteHander(d._id)}
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  >
                     Delete
                   </p>
                 </td>
