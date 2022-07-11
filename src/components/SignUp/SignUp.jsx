@@ -6,11 +6,8 @@ import auth from "../../firebase.init";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
-
 const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
   const formik = useFormik({
@@ -35,26 +32,23 @@ const SignUp = () => {
       const { email, password, checkbox } = values;
       if (checkbox) {
         createUserWithEmailAndPassword(email, password);
-       
-         if(user){
 
+        if (user) {
           toast.success("Sign Up success", { id: 1 });
-          navigate('/management')
-         }
-      
-        
+          navigate("/management");
+        }
       } else {
         toast.error("checkbox is required", { id: 1 });
       }
     },
   });
 
- if(error){
-  toast.error(error.message,{id:1})
- }
- if(loading){
-  <p>Loading...</p>
- }
+  if (error) {
+    toast.error(error.message, { id: 1 });
+  }
+  if (loading) {
+    <p>Loading...</p>;
+  }
   return (
     <>
       <div className="hero min-h-screen bg-primary">

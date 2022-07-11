@@ -9,12 +9,8 @@ import StudentInfoEdit from "./StudentInfoEdit";
 
 const ViewStudents = () => {
   const [students, setStudents] = useState([]);
-  const [editStudent,setEditStudent] = useState(null);
-  const {
-    register,
-    handleSubmit,
-    
-  } = useForm();
+  const [editStudent, setEditStudent] = useState(null);
+  const { register, handleSubmit } = useForm();
 
   //get all students
   const { isLoading, refetch } = useQuery(["students"], () =>
@@ -53,7 +49,13 @@ const ViewStudents = () => {
 
   return (
     <div className="m-4 p-6 shadow-2xl md:m-6">
-      {editStudent&& <StudentInfoEdit editStudent={editStudent} setEditStudent={setEditStudent} refetch={refetch}/>}
+      {editStudent && (
+        <StudentInfoEdit
+          editStudent={editStudent}
+          setEditStudent={setEditStudent}
+          refetch={refetch}
+        />
+      )}
       <p className="pb-4 text-lg text-accent">View Student</p>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -144,7 +146,6 @@ const ViewStudents = () => {
             </tr>
           </thead>
           <tbody>
-          
             {students.map((d, index) => (
               <tr key={d._id}>
                 <th>{index + 1}</th>
@@ -156,9 +157,12 @@ const ViewStudents = () => {
                 <td>Active</td>
                 <td>
                   {" "}
-                  <a onClick={()=>setEditStudent(d)} href="#student-edit-modal" className="font-medium text-blue-600 hover:underline dark:text-blue-500">
+                  <a
+                    onClick={() => setEditStudent(d)}
+                    href="#student-edit-modal"
+                    className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                  >
                     Edit
-                  
                   </a>
                 </td>
                 <td>

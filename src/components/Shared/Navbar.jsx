@@ -16,7 +16,7 @@ const Navbar = () => {
         </div>
         {user && (
           <div className="flex-none">
-            <div className="dropdown dropdown-end px-4 md:px-8">
+            <div className="dropdown-end dropdown px-4 md:px-8">
               <label tabIndex="0" className="btn btn-ghost btn-circle">
                 <div className="indicator">
                   <svg
@@ -81,12 +81,9 @@ const Navbar = () => {
                   </p>
                 </li>
                 <li>
-                <label
-            for="my-management"
-            class=" lg:hidden"
-          >
-           Management
-          </label>
+                  <label for="my-management" class=" lg:hidden">
+                    Management
+                  </label>
                 </li>
                 <li onClick={() => signOut(auth)}>
                   <Link to="/sign-in">Logout</Link>
