@@ -48,7 +48,7 @@ const AddStudent = () => {
           <input
             type="text"
             placeholder="Type here"
-            className="input w-full max-w-xs border bg-gray-200"
+            className={`input w-full max-w-xs border bg-gray-200 ${errors.Name?.type&& 'border-rose-700'}`}
             {...register("Name", { required: true })}
           />
         </div>
@@ -57,7 +57,7 @@ const AddStudent = () => {
           <input
             type="date"
             placeholder="Type here"
-            className="input w-full max-w-xs border bg-gray-200"
+            className={`input w-full max-w-xs border bg-gray-200 ${errors.date?.type&& 'border-rose-700'}`}
             {...register("date", { required: true })}
           />
         </div>
@@ -65,9 +65,9 @@ const AddStudent = () => {
           <label>School</label>
           <select
             {...register("school", { required: true })}
-            className="select  w-full max-w-xs  bg-gray-200 
+            className={`select  w-full max-w-xs  bg-gray-200 `}
           
-          "
+          
           >
             <option disabled selected>
               School

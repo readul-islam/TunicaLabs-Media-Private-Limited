@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 
+
 const SignIn = () => {
   const navigate = useNavigate()
   const [signInWithEmailAndPassword, user, loading, error] =
@@ -43,7 +44,10 @@ const SignIn = () => {
   if(error){
     toast.error(error.message,{id:1})
    }
-  console.log(user);
+  if(loading){
+    <p>Loading....</p>
+   }
+
   return (
     <>
       <div className="hero min-h-screen bg-primary">

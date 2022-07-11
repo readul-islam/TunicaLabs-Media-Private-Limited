@@ -48,9 +48,12 @@ const SignUp = () => {
       }
     },
   });
- console.log(error);
+
  if(error){
   toast.error(error.message,{id:1})
+ }
+ if(loading){
+  <p>Loading...</p>
  }
   return (
     <>
