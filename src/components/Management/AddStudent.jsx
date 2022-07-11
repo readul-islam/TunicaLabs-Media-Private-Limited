@@ -127,7 +127,7 @@ const AddStudent = () => {
 
           <div className="flex items-center space-x-4 ">
             <label className=" flex cursor-pointer items-center ">
-            <input type="checkbox" class="checkbox border rounded-full border-black" 
+            <input type="checkbox" className="checkbox border rounded-full border-black" 
                  {...register("active")}
             
             />
@@ -135,7 +135,7 @@ const AddStudent = () => {
               <span className="label-text px-4">Active</span>
             </label>
             <label className=" flex cursor-pointer items-center ">
-            <input type="checkbox" class="checkbox border rounded-full border-black" 
+            <input type="checkbox" className="checkbox border rounded-full border-black" 
                 {...register("invoice")}
               />
               <span className="label-text px-4">Invoice</span>
